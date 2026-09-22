@@ -2,18 +2,10 @@ package ru.stqa.geometry;
 
 public class Triangle {
     public static double perimeter(double side1, double side2, double side3) {
-        if (!isValidTriangle(side1, side2, side3)) {
-            throw new RuntimeException("Треугольник невалидный. Периметр не будет посчитан");
-        }
-
         return side1 + side2 +side3;
     }
 
     public static double area(double side1, double side2, double side3) {
-        if (!isValidTriangle(side1, side2, side3)) {
-            throw new RuntimeException("Треугольник невалидный. Площадь не будет посчитана");
-        }
-
         double halfPerimeter = perimeter(side1, side2, side3)/2;
         return Math.sqrt(halfPerimeter * (halfPerimeter - side1) * (halfPerimeter - side2) * (halfPerimeter - side3));
 
