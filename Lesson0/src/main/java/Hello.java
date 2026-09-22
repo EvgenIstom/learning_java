@@ -6,5 +6,6 @@ public class Hello {
         System.out.println(
                 "Hello" + 2*2
         );
+        System.out.println((int) 9.99);
     }
 }

@@ -1,3 +1,5 @@
+package ru.stqa.geometry;
+
 public class Geometry {
 
     static void main() {
