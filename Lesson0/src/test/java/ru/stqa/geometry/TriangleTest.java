@@ -6,19 +6,16 @@ import org.junit.jupiter.api.Test;
 public class TriangleTest {
     @Test
     void triangleIsValid() {
-        boolean validation = Triangle.isValidTriangle(5, 4, 3);
-        Assertions.assertEquals(true, validation);
+        Assertions.assertTrue(new Triangle(3, 4, 5).isValidTriangle());
     }
 
     @Test
     void perimeterIsCorrect() {
-        double result = Triangle.perimeter(5, 4, 3);
-        Assertions.assertEquals(12, result);
+        Assertions.assertEquals(12, new Triangle(3, 4, 5).perimeter());
     }
 
     @Test
     void areaIsCorrect() {
-        double result = Triangle.area(5, 4, 3.3);
-        Assertions.assertEquals(6.58, result, 0.01);
+        Assertions.assertEquals(5.95, new Triangle(3, 4, 5.3).area(), 0.01);
     }
 }
