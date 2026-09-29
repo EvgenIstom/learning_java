@@ -19,6 +19,7 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+.idea
 
-# Personal study notes (Obsidian vault), not course/project code
+# Study notes (Obsidian vault)
 java-conspect/

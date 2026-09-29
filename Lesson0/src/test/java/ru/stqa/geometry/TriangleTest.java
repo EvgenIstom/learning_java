@@ -35,4 +35,18 @@ public class TriangleTest {
             //ok
         }
     }
+
+    @Test
+    void trianglesAreEqual() {
+        var t1 = new Triangle(2, 4, 5);
+        var t2 = new Triangle(2, 4, 5);
+        Assertions.assertTrue(t1.equals(t2));
+    }
+
+    @Test
+    void trianglesWithNotOrderedSidesAreEqual() {
+        var t1 = new Triangle(2, 4, 5);
+        var t2 = new Triangle(4, 2, 5);
+        Assertions.assertTrue(t1.equals(t2));
+    }
 }

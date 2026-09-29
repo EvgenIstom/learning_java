@@ -38,6 +38,41 @@ public class Triangle {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Triangle)) return false;
+        Triangle triangle = (Triangle) o;
+        return (Double.compare(this.side1, triangle.side1) == 0
+                && Double.compare(this.side2, triangle.side2) == 0
+                && Double.compare(this.side3, triangle.side3) == 0)
+                ||
+                (Double.compare(this.side1, triangle.side1) == 0
+                && Double.compare(this.side2, triangle.side3) == 0
+                && Double.compare(this.side3, triangle.side2) == 0)
+                ||
+                (Double.compare(this.side1, triangle.side2) == 0
+                && Double.compare(this.side2, triangle.side1) == 0
+                && Double.compare(this.side3, triangle.side3) == 0)
+                ||
+                (Double.compare(this.side1, triangle.side2) == 0
+                && Double.compare(this.side2, triangle.side3) == 0
+                && Double.compare(this.side3, triangle.side1) == 0)
+                ||
+                (Double.compare(this.side1, triangle.side3) == 0
+                && Double.compare(this.side2, triangle.side1) == 0
+                && Double.compare(this.side3, triangle.side2) == 0)
+                ||
+                (Double.compare(this.side1, triangle.side3) == 0
+                && Double.compare(this.side2, triangle.side2) == 0
+                && Double.compare(this.side3, triangle.side1) == 0)
+                ;
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
 
     public static void main(String[] args) {
         System.out.println("Периметр = " + new Triangle(3, 4, 6).perimeter());

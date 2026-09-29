@@ -5,9 +5,8 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../Lesson0/src/test">
       <sourceFolder url="file://$MODULE_DIR$/../../Lesson0/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../Lesson0/src/test/resources" type="java-test-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="temurin-25" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Lesson0.main" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter:6.0.0" level="project" />

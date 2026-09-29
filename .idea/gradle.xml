@@ -10,11 +10,6 @@
             <option value="$PROJECT_DIR$/Lesson0" />
           </set>
         </option>
-        <option name="myGradleHome" value="" />
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/untitled" />
-        <option name="myGradleHome" value="" />
       </GradleProjectSettings>
     </option>
   </component>
