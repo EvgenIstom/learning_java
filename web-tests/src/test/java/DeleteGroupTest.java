@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -7,7 +6,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class CreateGroupTest {
+public class DeleteGroupTest {
     private static WebDriver driver;
 
     @BeforeEach
@@ -34,18 +33,22 @@ public class CreateGroupTest {
     }
 
     @Test
-    public void CanCreateGroup() {
+    public void CanDeleteGroup() {
         if (!isElementPresent(By.name("new"))) {
             driver.findElement(By.linkText("groups")).click();
         }
-        driver.findElement(By.name("new")).click();
-        driver.findElement(By.name("group_name")).click();
-        driver.findElement(By.name("group_name")).sendKeys("TestGroup");
-        driver.findElement(By.name("group_header")).click();
-        driver.findElement(By.name("group_header")).sendKeys("LogoGroup");
-        driver.findElement(By.name("group_footer")).click();
-        driver.findElement(By.name("group_footer")).sendKeys("CommentGroup");
-        driver.findElement(By.name("submit")).click();
-        driver.findElement(By.linkText("group page")).click();
+        if (!isElementPresent(By.name("selected[]"))) {
+            driver.findElement(By.name("new")).click();
+            driver.findElement(By.name("group_name")).click();
+            driver.findElement(By.name("group_name")).sendKeys("TestGroup");
+            driver.findElement(By.name("group_header")).click();
+            driver.findElement(By.name("group_header")).sendKeys("LogoGroup");
+            driver.findElement(By.name("group_footer")).click();
+            driver.findElement(By.name("group_footer")).sendKeys("CommentGroup");
+            driver.findElement(By.name("submit")).click();
+            driver.findElement(By.linkText("group page")).click();
+        }
+        driver.findElement(By.name("selected[]")).click();
+        driver.findElement(By.name("delete")).click();
     }
 }
