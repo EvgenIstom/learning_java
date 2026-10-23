@@ -3,7 +3,7 @@ package tests;
 import model.GroupData;
 import org.junit.jupiter.api.Test;
 
-public class CreateGroupTest extends TestBase {
+public class CreateGroupTests extends TestBase {
 
     @Test
     public void CanCreateGroup() {

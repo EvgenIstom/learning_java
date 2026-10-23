@@ -3,7 +3,7 @@ package tests;
 import model.GroupData;
 import org.junit.jupiter.api.Test;
 
-public class DeleteGroupTest extends TestBase {
+public class DeleteGroupTests extends TestBase {
 
     @Test
     public void CanDeleteGroup() {
