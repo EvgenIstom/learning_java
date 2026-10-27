@@ -57,10 +57,6 @@ public class GroupHelper extends HelperBase{
         click(By.linkText("group page"));
     }
 
-    private void submitGroupUpdate() {
-        click(By.name("update"));
-    }
-
     private void fillGroupForm(GroupData group) {
         type(By.name("group_name"), group.name());
         type(By.name("group_header"), group.header());
@@ -77,6 +73,10 @@ public class GroupHelper extends HelperBase{
 
     private void submitGroupCreation() {
         click(By.name("submit"));
+    }
+
+    private void submitGroupUpdate() {
+        click(By.name("update"));
     }
 
 }
