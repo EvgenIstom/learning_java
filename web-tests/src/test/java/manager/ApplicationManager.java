@@ -43,6 +43,9 @@ public class ApplicationManager {
         return contacts;
     }
 
+    public void alertAccept() {
+        driver.switchTo().alert().accept();
+    }
 
     public boolean isElementPresent(By locator) {
         try {
