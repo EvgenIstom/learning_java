@@ -5,6 +5,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import java.time.Duration;
 
 public class ApplicationManager {
     public WebDriver driver;
@@ -15,6 +16,7 @@ public class ApplicationManager {
     public void init() {
         if (driver == null) {
             driver = new FirefoxDriver();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit)); //вместо постусловия закрытия браузера
             driver.get("http://localhost/addressbook/index.php");
             driver.manage().window().setSize(new Dimension(550, 691));
@@ -43,9 +45,9 @@ public class ApplicationManager {
         return contacts;
     }
 
-    public void alertAccept() {
-        driver.switchTo().alert().accept();
-    }
+//    public void alertAccept() {
+//        driver.switchTo().alert().accept();
+//    }
 
     public boolean isElementPresent(By locator) {
         try {

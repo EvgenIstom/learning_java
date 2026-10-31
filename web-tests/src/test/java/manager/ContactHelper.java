@@ -50,10 +50,6 @@ public class ContactHelper extends HelperBase{
             click(By.linkText("home"));
     }
 
-    private void returnToAddContactPage() {
-        click(By.linkText("add new"));
-    }
-
     private void submitContactCreation() {
         click(By.name("submit"));
     }
