@@ -1,6 +1,7 @@
 package manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 
 public class HelperBase {
     protected final ApplicationManager manager;
@@ -10,7 +11,11 @@ public class HelperBase {
     }
 
     protected void click(By locator) {
-        manager.driver.findElement(locator).click();
+        try {
+            manager.driver.findElement(locator).click();
+        } catch (StaleElementReferenceException e) {
+            manager.driver.findElement(locator).click();
+        }
     }
 
     protected void type(By locator, String text) {
