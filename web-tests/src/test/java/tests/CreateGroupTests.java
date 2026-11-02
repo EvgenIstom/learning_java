@@ -15,6 +15,19 @@ public class CreateGroupTests extends TestBase {
     }
 
     @Test
+    public void canCreateGroups() {
+        int groupCount = app.groups().getCount();
+        int count = Integer.parseInt(System.getProperty("count", "20"));
+        for (int i = 1; i <= count; i++) {
+            app.groups().createGroup(new GroupData(
+                    "Name" + i, "Header" + i, "Footer" +i));
+        }
+        int newGroupCount = app.groups().getCount();
+        Assertions.assertEquals(groupCount + count, newGroupCount);
+    }
+
+
+    @Test
     public void canCreateGroupWithEmptyName() {
         app.groups().createGroup(new GroupData());
     }
