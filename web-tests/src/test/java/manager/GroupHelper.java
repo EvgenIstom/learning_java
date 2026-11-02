@@ -49,7 +49,7 @@ public class GroupHelper extends HelperBase{
      }
 
     private void returnToGroupsPage() {
-        click(By.linkText("group page"));
+        manager.driver.get("http://localhost/addressbook/group.php");
     }
 
     private void fillGroupForm(GroupData group) {
