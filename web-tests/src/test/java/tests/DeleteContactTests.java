@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class DeleteContactTests extends TestBase {
 
     @Test
-    public void CanDeleteContact() {
+    public void canDeleteContact() {
         if (!app.contacts().isContactPresent()) {
             app.contacts().createContact(new ContactData("FirstNameByDeleteContact", "LastNameByDeleteContact", "Address DEL 17-19"));
         }
