@@ -88,6 +88,7 @@ public class GroupHelper extends HelperBase{
     private void selectAllGroups() {
         var checkboxes = manager.driver.findElements(By.name("selected[]"));
         for (var checkbox : checkboxes) {
+            scrollToElement(checkbox);
             checkbox.click();
         }
     }
