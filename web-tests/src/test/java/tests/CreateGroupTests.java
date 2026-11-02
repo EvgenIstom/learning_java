@@ -20,7 +20,7 @@ public class CreateGroupTests extends TestBase {
         int count = Integer.parseInt(System.getProperty("count", "20"));
         for (int i = 1; i <= count; i++) {
             app.groups().createGroup(new GroupData(
-                    "Name" + i, "Header" + i, "Footer" +i));
+                    randomString(i), "Header" + i, "Footer" +i));
         }
         int newGroupCount = app.groups().getCount();
         Assertions.assertEquals(groupCount + count, newGroupCount);
