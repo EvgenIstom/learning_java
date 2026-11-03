@@ -1,9 +1,7 @@
 package manager;
 
 import model.ContactData;
-import model.GroupData;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,9 +90,9 @@ public class ContactHelper extends HelperBase{
         var contacts = new ArrayList<ContactData>();
         var rows = manager.driver.findElements(By.cssSelector("#maintable tr[name='entry']"));
         for (var row : rows) {
-            var firstName = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var firstName = row.findElement(By.cssSelector("td:nth-child(3)")).getText();
             var lastName = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
-            var address = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var address = row.findElement(By.cssSelector("td:nth-child(4)")).getText();
             var checkbox = row.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("id");
             contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address));
