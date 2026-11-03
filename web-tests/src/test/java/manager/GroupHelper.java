@@ -42,9 +42,9 @@ public class GroupHelper extends HelperBase{
         click(By.name("delete"));
     }
 
-    public void updateGroup(GroupData updatedGroup) {
+    public void updateGroup(GroupData group, GroupData updatedGroup) {
         openGroupsPage();
-        selectGroup(null);
+        selectGroup(group);
         initUpdatingGroup();
         fillGroupForm(updatedGroup);
         submitGroupUpdate();
