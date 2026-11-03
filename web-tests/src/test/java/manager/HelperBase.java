@@ -1,9 +1,12 @@
 package manager;
 
+import model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class HelperBase {
     protected final ApplicationManager manager;
@@ -30,5 +33,4 @@ public class HelperBase {
     protected void scrollToElement(WebElement element) {
         ((JavascriptExecutor) manager.driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
     }
-
 }

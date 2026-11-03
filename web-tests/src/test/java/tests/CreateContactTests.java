@@ -16,11 +16,17 @@ public class CreateContactTests extends TestBase {
         for (var firstName : List.of("", "first name")) {
             for (var lastName : List.of("", "last name")) {
                 for (var address : List.of("", "address"))
-                    result.add(new ContactData(firstName, lastName, address));
+                    result.add(new ContactData()
+                        .withFirstName(firstName)
+                        .withLastName(lastName)
+                        .withAddress(address));
             }
         }
         for (int i = 1; i <= 6; i++) {
-            result.add(new ContactData(randomString(i), randomString(i), randomString(i)));
+            result.add(new ContactData()
+                    .withFirstName(randomString(i))
+                    .withLastName(randomString(i))
+                    .withAddress(randomString(i)));
         }
         return result;
     }
