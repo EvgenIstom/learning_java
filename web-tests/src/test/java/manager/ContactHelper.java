@@ -1,8 +1,12 @@
 package manager;
 
 import model.ContactData;
+import model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase{
 
@@ -31,9 +35,9 @@ public class ContactHelper extends HelperBase{
     }
 
 
-    public void deleteContact() {
+    public void deleteContact(ContactData contact) {
         openHomePage();
-        selectContact();
+        selectContact(contact);
         deleteSelectedContact();
         returnToHomePage();
     }
@@ -62,8 +66,8 @@ public class ContactHelper extends HelperBase{
 //        click(By.("edit"));
 //    }
 
-    private void selectContact() {
-        click(By.name("selected[]"));
+    private void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
     public int getCount() {
@@ -81,5 +85,20 @@ public class ContactHelper extends HelperBase{
         var selectAll = manager.driver.findElement(By.id("MassCB"));
         scrollToElement(selectAll);
         click(By.id("MassCB"));
+    }
+
+    public List<ContactData> getContactsList() {
+        openHomePage();
+        var contacts = new ArrayList<ContactData>();
+        var rows = manager.driver.findElements(By.cssSelector("#maintable tr[name='entry']"));
+        for (var row : rows) {
+            var firstName = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var lastName = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var address = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var checkbox = row.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("id");
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address));
+        }
+        return contacts;
     }
 }
