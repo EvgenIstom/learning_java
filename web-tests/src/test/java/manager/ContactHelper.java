@@ -99,4 +99,24 @@ public class ContactHelper extends HelperBase{
         }
         return contacts;
     }
+
+    public void updateContact(ContactData contact, ContactData updatedContact) {
+        openHomePage();
+        initUpdatingContact(contact);
+        fillContactForm(updatedContact);
+        submitContactUpdate();
+        returnToHomePage();
+    }
+
+    private void submitContactUpdate() {
+        click(By.name("update"));
+    }
+
+    private void initUpdatingContact(ContactData contact) {
+        var pencil = manager.driver.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.id())));
+        scrollToElement(pencil);
+        click(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.id())));
+    }
 }
+
+//<a href="edit.php?id=129"><img src="icons/pencil.png" title="Edit" alt="Edit"></a>

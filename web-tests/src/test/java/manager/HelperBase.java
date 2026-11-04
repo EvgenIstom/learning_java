@@ -31,6 +31,6 @@ public class HelperBase {
 
     //нужен для скролла до нужного элемента, подключает умение исполнять js
     protected void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) manager.driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+        ((JavascriptExecutor) manager.driver).executeScript("arguments[0].scrollIntoView({block: 'center',  inline: 'center'});", element);
     }
 }
