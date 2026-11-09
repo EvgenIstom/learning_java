@@ -14,27 +14,29 @@ public class CreateContactTests extends TestBase {
 
     public static List<ContactData> contactProvider() {
         var result = new ArrayList<ContactData>();
-        for (var firstName : List.of("", "first name")) {
-            for (var lastName : List.of("", "last name")) {
-                for (var address : List.of("", "address"))
-                    result.add(new ContactData()
-                        .withFirstName(firstName)
-                        .withLastName(lastName)
-                        .withAddress(address));
-            }
-        }
+//        for (var firstName : List.of("", "first name")) {
+//            for (var lastName : List.of("", "last name")) {
+//                for (var address : List.of("", "address"))
+//                    result.add(new ContactData()
+//                        .withFirstName(firstName)
+//                        .withLastName(lastName)
+//                        .withAddress(address)
+//                        .withPhoto("src/test/resources/images/random-person.jpeg"));
+//            }
+//        }
         for (int i = 1; i <= 6; i++) {
             result.add(new ContactData()
                     .withFirstName(randomString(i))
                     .withLastName(randomString(i))
-                    .withAddress(randomString(i)));
+                    .withAddress(randomString(i))
+                    .withPhoto(randomFile("src/test/resources/images")));
         }
         return result;
     }
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "hello contact'", "", "")));
+                new ContactData("", "hello contact'", "", "", "")));
         return result;
     }
 

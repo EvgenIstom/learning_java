@@ -13,7 +13,7 @@ public class UpdateContactTests extends TestBase {
     @Test
     void canUpdateContact() {
         if (app.contacts().getCount() == 0) {
-            app.contacts().createContact(new ContactData("", "ContactCreatedByUpdateContactTest", "header", "footer"));
+            app.contacts().createContact(new ContactData("", "ContactCreatedByUpdateContactTest", "lastname", "address", ""));
         }
         var oldContacts = app.contacts().getContactsList();
         var rnd = new Random();

@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 public class HelperBase {
@@ -27,6 +28,10 @@ public class HelperBase {
         click(locator);
         manager.driver.findElement(locator).clear();
         manager.driver.findElement(locator).sendKeys(text);
+    }
+
+    protected void attach(By locator, String file) {
+        manager.driver.findElement(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }
 
     //нужен для скролла до нужного элемента, подключает умение исполнять js

@@ -58,6 +58,7 @@ public class ContactHelper extends HelperBase{
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
         type(By.name("address"), contact.address());
+        attach(By.name("photo"), contact.photo());
     }
 
 //    private void initUpdatingContact() {
@@ -65,6 +66,8 @@ public class ContactHelper extends HelperBase{
 //    }
 
     private void selectContact(ContactData contact) {
+        var selectContact = manager.driver.findElement(By.cssSelector(String.format("input[value='%s']", contact.id())));
+        scrollToElement(selectContact);
         click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
