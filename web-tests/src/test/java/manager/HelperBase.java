@@ -1,13 +1,12 @@
 package manager;
 
-import model.GroupData;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import java.nio.file.Paths;
-import java.util.List;
 
 public class HelperBase {
     protected final ApplicationManager manager;
