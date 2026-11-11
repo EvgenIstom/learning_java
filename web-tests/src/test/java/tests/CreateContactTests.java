@@ -1,5 +1,6 @@
 package tests;
 
+import common.CommonFunctions;
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,9 +27,9 @@ public class CreateContactTests extends TestBase {
 //        }
         for (int i = 1; i <= 6; i++) {
             result.add(new ContactData()
-                    .withFirstName(randomString(i))
-                    .withLastName(randomString(i))
-                    .withAddress(randomString(i))
+                    .withFirstName(CommonFunctions.randomString(i))
+                    .withLastName(CommonFunctions.randomString(i))
+                    .withAddress(CommonFunctions.randomString(i))
                     .withPhoto(randomFile("src/test/resources/images")));
         }
         return result;
