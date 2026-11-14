@@ -8,15 +8,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.lang.reflect.Type;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class CreateGroupTests extends TestBase {
 
-    public static List<GroupData> groupProvider() {
+    public static List<GroupData> groupProvider() throws IOException {
         var result = new ArrayList<GroupData>();
 //        for (var name : List.of("", "group name")) {
 //            for (var header : List.of("", "group header")) {
@@ -27,8 +31,22 @@ public class CreateGroupTests extends TestBase {
 //                            .withFooter(footer));
 //            }
 //        }
+//        var json = "";
+//        try (var reader = new FileReader("groups.json");
+//            var breader = new BufferedReader(reader)) {
+//            var line = breader.readLine();
+//            while (line != null) {
+//                json = json + line;
+//                line = breader.readLine();
+//            }
+//        }
+        var json = Files.readString(Paths.get("../groups.json"));
         ObjectMapper mapper = new ObjectMapper();
-        var value = mapper.readValue(new File("../groups2.json"), new TypeReference<List<GroupData>>() {});
+
+        var value = mapper.readValue(
+                json, new TypeReference<List<GroupData>>() {}
+        );
+
         result.addAll(value);
         return result;
         }

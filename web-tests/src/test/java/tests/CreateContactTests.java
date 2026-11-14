@@ -5,7 +5,14 @@ import model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.dataformat.xml.XmlMapper;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,7 +20,7 @@ import java.util.List;
 
 public class CreateContactTests extends TestBase {
 
-    public static List<ContactData> contactProvider() {
+    public static List<ContactData> contactProvider() throws IOException {
         var result = new ArrayList<ContactData>();
 //        for (var firstName : List.of("", "first name")) {
 //            for (var lastName : List.of("", "last name")) {
@@ -25,13 +32,13 @@ public class CreateContactTests extends TestBase {
 //                        .withPhoto("src/test/resources/images/random-person.jpeg"));
 //            }
 //        }
-        for (int i = 1; i <= 6; i++) {
-            result.add(new ContactData()
-                    .withFirstName(CommonFunctions.randomString(i))
-                    .withLastName(CommonFunctions.randomString(i))
-                    .withAddress(CommonFunctions.randomString(i))
-                    .withPhoto(randomFile("src/test/resources/images")));
-        }
+        var xml = Files.readString(Paths.get("../contacts.xml"));
+        ObjectMapper xmlMapper = new XmlMapper();
+        var value = xmlMapper.readValue(
+                xml,
+                new TypeReference<List<ContactData>>() {}
+        );
+        result.addAll(value);
         return result;
     }
 
@@ -55,7 +62,12 @@ public class CreateContactTests extends TestBase {
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newContacts, expectedList);
+
+        //не показываем фото, сравниваем только то, что на странице
+        var actual = newContacts.stream().map(this::withoutPhoto).toList();
+        var expected = expectedList.stream().map(this::withoutPhoto).toList();
+
+        Assertions.assertEquals(actual, expected);
     }
 
 

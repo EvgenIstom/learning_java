@@ -1,6 +1,7 @@
 package tests;
 
 import manager.ApplicationManager;
+import model.ContactData;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
@@ -24,5 +25,9 @@ public class TestBase {
         var rnd = new Random();
         var index = rnd.nextInt(fileNames.length);
         return Paths.get(dir, fileNames[index]).toString();
+    }
+
+    public Object withoutPhoto(ContactData contactData) {
+        return new ContactData(contactData.id(), contactData.firstName(), contactData.lastName(), contactData.address());
     }
 }

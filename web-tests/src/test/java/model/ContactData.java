@@ -6,6 +6,10 @@ public record ContactData(String id, String firstName, String lastName, String a
         this("", "", "", "", "");
     }
 
+    public ContactData(String id, String firstName, String lastName, String address) {
+        this(id, firstName, lastName, address, "");
+    }
+
     public ContactData withId(String id) {
         return new ContactData(id, this.firstName, this.lastName, this.address, this.photo);
     }

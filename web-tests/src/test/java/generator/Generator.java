@@ -3,13 +3,20 @@ package generator;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import common.CommonFunctions;
+import model.ContactData;
 import model.GroupData;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static tests.TestBase.randomFile;
 
 public class Generator {
 
@@ -25,7 +32,7 @@ public class Generator {
     @Parameter(names={"--count", "-c"})
     int count;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         var generator = new Generator();
         JCommander.newBuilder()
                 .addObject(generator)
@@ -34,7 +41,7 @@ public class Generator {
         generator.run();
     }
 
-    private void run() {
+    private void run() throws IOException {
         var data = generate();
         save(data);
     }
@@ -63,23 +70,35 @@ public class Generator {
     }
 
     private Object generateContacts() {
-        var result = new ArrayList<GroupData>();
+        var result = new ArrayList<ContactData>();
         for (int i = 0; i <= count; i++) {
-            result.add(new GroupData()
-                    .withName(CommonFunctions.randomString(i))
-                    .withHeader(CommonFunctions.randomString(i))
-                    .withFooter(CommonFunctions.randomString(i)));
+            result.add(new ContactData()
+                    .withFirstName(CommonFunctions.randomString(i))
+                    .withLastName(CommonFunctions.randomString(i))
+                    .withAddress(CommonFunctions.randomString(i))
+                    .withPhoto(randomFile("src/test/resources/images")));
         }
         return result;
     }
 
-    private void save(Object data) {
+    private void save(Object data) throws IOException {
         if ("json".equals(format)) {
             ObjectMapper mapper = JsonMapper.builder()
             .enable(SerializationFeature.INDENT_OUTPUT)
             .build();
+            var json = mapper.writeValueAsString(data);
+
+            try (var writer = new FileWriter(output)) {
+                writer.write(json);
+            };
+        } else if ("yaml".equals(format)) {
+            var mapper = new YAMLMapper();
             mapper.writeValue(new File(output), data);
-        } else {
+        } else if ("xml".equals(format)) {
+            var mapper = new XmlMapper();
+            mapper.writeValue(new File(output), data);
+        }
+        else {
             throw new IllegalArgumentException("Неизвестный формат данных" + format);
         }
     }
