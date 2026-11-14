@@ -30,6 +30,9 @@ public class HelperBase {
     }
 
     protected void attach(By locator, String file) {
+        if (file == null || file.isEmpty()) {
+            return;
+        }
         manager.driver.findElement(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }
 

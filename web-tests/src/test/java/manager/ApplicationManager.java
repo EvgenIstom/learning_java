@@ -23,7 +23,7 @@ public class ApplicationManager {
             } else {
                 throw new IllegalArgumentException(String.format("Unknown browser %s", browser));
             }
-//            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit)); //вместо постусловия закрытия браузера
             driver.get("http://localhost/addressbook/index.php");
             driver.manage().window().setSize(new Dimension(1920, 1080));
