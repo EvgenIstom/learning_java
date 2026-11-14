@@ -4,7 +4,11 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import common.CommonFunctions;
 import model.GroupData;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Generator {
@@ -70,10 +74,14 @@ public class Generator {
     }
 
     private void save(Object data) {
-
+        if ("json".equals(format)) {
+            ObjectMapper mapper = JsonMapper.builder()
+            .enable(SerializationFeature.INDENT_OUTPUT)
+            .build();
+            mapper.writeValue(new File(output), data);
+        } else {
+            throw new IllegalArgumentException("Неизвестный формат данных" + format);
+        }
     }
-
-
-
 }
 

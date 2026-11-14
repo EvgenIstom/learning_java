@@ -5,7 +5,11 @@ import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -14,23 +18,21 @@ public class CreateGroupTests extends TestBase {
 
     public static List<GroupData> groupProvider() {
         var result = new ArrayList<GroupData>();
-        for (var name : List.of("", "group name")) {
-            for (var header : List.of("", "group header")) {
-                for (var footer : List.of("", "group footer"))
-                    result.add(new GroupData()
-                            .withName(name)
-                            .withHeader(header)
-                            .withFooter(footer));
-            }
-        }
-        for (int i = 1; i <= 6; i++) {
-            result.add(new GroupData()
-                    .withName(CommonFunctions.randomString(i))
-                    .withHeader(CommonFunctions.randomString(i))
-                    .withFooter(CommonFunctions.randomString(i)));
-        }
+//        for (var name : List.of("", "group name")) {
+//            for (var header : List.of("", "group header")) {
+//                for (var footer : List.of("", "group footer"))
+//                    result.add(new GroupData()
+//                            .withName(name)
+//                            .withHeader(header)
+//                            .withFooter(footer));
+//            }
+//        }
+        ObjectMapper mapper = new ObjectMapper();
+        var value = mapper.readValue(new File("../groups2.json"), new TypeReference<List<GroupData>>() {});
+        result.addAll(value);
         return result;
-    }
+        }
+
 
     public static List<GroupData> negativeGroupProvider() {
         var result = new ArrayList<GroupData>(List.of(
