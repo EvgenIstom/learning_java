@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import java.time.Duration;
+import java.util.Properties;
 
 public class ApplicationManager {
     public WebDriver driver;
@@ -14,7 +15,10 @@ public class ApplicationManager {
     private GroupHelper groups;
     private ContactHelper contacts;
 
-    public void init(String browser) {
+    private Properties properties;
+
+    public void init(String browser, Properties properties) {
+
         if (driver == null) {
             if ("firefox".equals(browser)) {
                 driver = new FirefoxDriver();
@@ -23,11 +27,11 @@ public class ApplicationManager {
             } else {
                 throw new IllegalArgumentException(String.format("Unknown browser %s", browser));
             }
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+//            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit)); //вместо постусловия закрытия браузера
-            driver.get("http://localhost/addressbook/index.php");
+            driver.get(properties.getProperty("web.baseurl"));
             driver.manage().window().setSize(new Dimension(1920, 1080));
-            session().login("admin", "secret");
+            session().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
         }
     }
 
