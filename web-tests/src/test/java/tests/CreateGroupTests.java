@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -51,11 +52,43 @@ public class CreateGroupTests extends TestBase {
         return result;
         }
 
+    public static List<GroupData> SingleRandomGroupProvider() {
+        var result = new ArrayList<GroupData>(List.of(
+                new GroupData()
+                        .withName(CommonFunctions.randomString(3))
+                        .withHeader(CommonFunctions.randomString(3))
+                        .withFooter(CommonFunctions.randomString(3))));
+        return result;
+    }
+
 
     public static List<GroupData> negativeGroupProvider() {
         var result = new ArrayList<GroupData>(List.of(
                 new GroupData("", "hello group'", "", "")));
         return result;
+    }
+
+    @ParameterizedTest
+    @MethodSource("SingleRandomGroupProvider")
+    public void canCreateGroup(GroupData group) throws SQLException {
+        var oldGroups = app.jdbc().getGroupList();
+        app.groups().createGroup(group);
+        var newGroups = app.jdbc().getGroupList();
+        Comparator<GroupData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newGroups.sort(compareById);
+        var maxId = newGroups.get(newGroups.size() - 1).id();
+        var expectedList = new ArrayList<>(oldGroups);
+
+        expectedList.add(group.withId(maxId));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newGroups, expectedList);
+
+        var newUiGroups = app.groups().getList();
+        newUiGroups.sort(compareById);
+        var uiExpectedList = expectedList.stream().map(groupData -> new GroupData(groupData.id(), groupData.name())).toList();
+        Assertions.assertEquals(newUiGroups, uiExpectedList);
     }
 
     @ParameterizedTest
@@ -69,8 +102,10 @@ public class CreateGroupTests extends TestBase {
         };
         newGroups.sort(compareById);
 
+        var maxId = newGroups.get(newGroups.size() - 1).id();
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
+
+        expectedList.add(group.withId(maxId).withHeader("").withFooter(""));
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
     }

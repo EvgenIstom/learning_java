@@ -14,6 +14,7 @@ public class ApplicationManager {
     private LoginHelper session;
     private GroupHelper groups;
     private ContactHelper contacts;
+    private JdbcHelper jdbc;
 
     private Properties properties;
 
@@ -35,6 +36,13 @@ public class ApplicationManager {
         }
     }
 
+
+    public JdbcHelper jdbc() {
+        if (jdbc == null) {
+            jdbc = new JdbcHelper(this);
+        }
+        return jdbc;
+    }
     public LoginHelper session() {
         if (session == null) {
             session = new LoginHelper(this);
