@@ -1,0 +1,72 @@
+package manager;
+
+import manager.hbm.GroupRecord;
+import model.GroupData;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.cfg.Configuration;
+import org.jspecify.annotations.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class HibernateHelper extends HelperBase {
+
+    private SessionFactory sessionFactory;
+
+
+    public HibernateHelper(ApplicationManager manager) {
+        super(manager);
+        var props = manager.properties;
+        sessionFactory = new Configuration()
+                .addAnnotatedClass(GroupRecord.class)
+                .setProperty(AvailableSettings.JAKARTA_JDBC_URL, props.getProperty("db.url"))
+                .setProperty(AvailableSettings.JAKARTA_JDBC_USER, props.getProperty("db.username"))
+                .setProperty(AvailableSettings.JAKARTA_JDBC_PASSWORD, props.getProperty("db.password"))
+                .buildSessionFactory();
+    }
+
+    static List<GroupData> convertList(List<GroupRecord> records) {
+        List<GroupData> result = new ArrayList<>();
+        for (var record : records) {
+            result.add(convert(record));
+        }
+        return result;
+    }
+
+    private static @NonNull GroupData convert(GroupRecord record) {
+        return new GroupData(
+                "" + record.id, record.name, record.header, record.footer
+        );
+    }
+
+    private static @NonNull GroupRecord convert(GroupData data) {
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new GroupRecord(
+                Integer.parseInt(id), data.name(), data.header(), data.footer()
+        );
+    }
+
+    public List<GroupData> getGroupList() {
+        return convertList(sessionFactory.fromSession(session -> {
+            return  session.createQuery("from GroupRecord", GroupRecord.class).list();
+        }));
+    }
+
+    public long getGroupCount() {
+        return sessionFactory.fromSession(session -> {
+            return  session.createQuery("select count(*) from GroupRecord", Long.class).getSingleResult();
+        });
+    }
+
+    public void createGroup(GroupData groupData) {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(convert(groupData));
+            session.getTransaction().commit();
+        });
+    }
+}

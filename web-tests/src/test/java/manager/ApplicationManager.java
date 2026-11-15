@@ -15,11 +15,12 @@ public class ApplicationManager {
     private GroupHelper groups;
     private ContactHelper contacts;
     private JdbcHelper jdbc;
+    private HibernateHelper hbm;
 
-    private Properties properties;
+    public Properties properties;
 
     public void init(String browser, Properties properties) {
-
+        this.properties = properties;
         if (driver == null) {
             if ("firefox".equals(browser)) {
                 driver = new FirefoxDriver();
@@ -36,6 +37,12 @@ public class ApplicationManager {
         }
     }
 
+    public HibernateHelper hbm() {
+        if (hbm == null) {
+            hbm = new HibernateHelper(this);
+        }
+        return hbm;
+    }
 
     public JdbcHelper jdbc() {
         if (jdbc == null) {

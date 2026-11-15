@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class JdbcHelper extends HelperBase {
 
@@ -13,7 +14,10 @@ public class JdbcHelper extends HelperBase {
 
     public List<GroupData> getGroupList() throws SQLException {
         var groups = new ArrayList<GroupData>();
-        try (var conn = DriverManager.getConnection("jdbc:mysql://localhost/addressbook", "root", "");
+        var props = manager.properties;
+        try (var conn = DriverManager.getConnection(props.getProperty("db.url"),
+                props.getProperty("db.username"),
+                props.getProperty("db.password"));
             var statement = conn.createStatement();
             var result = statement.executeQuery("SELECT group_id, group_name, group_header, group_footer FROM group_list"))
              {
