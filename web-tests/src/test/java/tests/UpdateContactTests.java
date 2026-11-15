@@ -12,15 +12,15 @@ import java.util.Random;
 public class UpdateContactTests extends TestBase {
     @Test
     void canUpdateContact() {
-        if (app.contacts().getCount() == 0) {
-            app.contacts().createContact(new ContactData("", "ContactCreatedByUpdateContactTest", "lastname", "address", ""));
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData("", "ContactCreatedByUpdateContactTest", "lastname", "address", ""));
         }
-        var oldContacts = app.contacts().getContactsList();
+        var oldContacts = app.hbm().getContactList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
         var testData = new ContactData().withFirstName("UpdatedContact");
         app.contacts().updateContact(oldContacts.get(index), testData);
-        var newContacts = app.contacts().getContactsList();
+        var newContacts = app.hbm().getContactList();
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.set(index, testData.withId(oldContacts.get(index).id()));
         Comparator<ContactData> compareById = (o1, o2) -> {

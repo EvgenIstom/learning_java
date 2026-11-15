@@ -1,6 +1,8 @@
 package manager;
 
+import manager.hbm.ContactRecord;
 import manager.hbm.GroupRecord;
+import model.ContactData;
 import model.GroupData;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
@@ -19,6 +21,7 @@ public class HibernateHelper extends HelperBase {
         super(manager);
         var props = manager.properties;
         sessionFactory = new Configuration()
+                .addAnnotatedClass(ContactRecord.class)
                 .addAnnotatedClass(GroupRecord.class)
                 .setProperty(AvailableSettings.JAKARTA_JDBC_URL, props.getProperty("db.url"))
                 .setProperty(AvailableSettings.JAKARTA_JDBC_USER, props.getProperty("db.username"))
@@ -69,4 +72,49 @@ public class HibernateHelper extends HelperBase {
             session.getTransaction().commit();
         });
     }
+
+    static List<ContactData> convertContactList(List<ContactRecord> records) {
+        List<ContactData> result = new ArrayList<>();
+        for (var record : records) {
+            result.add(convert(record));
+        }
+        return result;
+    }
+
+    private static @NonNull ContactData convert(ContactRecord record) {
+        return new ContactData(
+                "" + record.id, record.firstname, record.lastname, record.address
+        );
+    }
+
+    private static @NonNull ContactRecord convert(ContactData data) {
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new ContactRecord(
+                Integer.parseInt(id), data.firstName(), data.lastName(), data.address()
+        );
+    }
+
+    public List<ContactData> getContactList() {
+        return convertContactList(sessionFactory.fromSession(session -> {
+            return  session.createQuery("from ContactRecord", ContactRecord.class).list();
+        }));
+    }
+
+    public long getContactCount() {
+        return sessionFactory.fromSession(session -> {
+            return  session.createQuery("select count(*) from ContactRecord", Long.class).getSingleResult();
+        });
+    }
+
+    public void createContact(ContactData contactData) {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(convert(contactData));
+            session.getTransaction().commit();
+        });
+    }
+
 }
