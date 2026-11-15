@@ -21,5 +21,8 @@ gradle-app.setting
 .classpath
 .idea
 
-# Study notes (Obsidian vault)
+# Конспекты
 java-conspect/
+
+# Локальная конфигурация стенда (URL, креды) — не коммитится
+local.properties
