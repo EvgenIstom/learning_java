@@ -1,7 +1,10 @@
 package manager;
 
+import manager.hbm.GroupRecord;
 import model.ContactData;
+import model.GroupData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +68,18 @@ public class ContactHelper extends HelperBase{
 //        click(By.("edit"));
 //    }
 
+    public void createContact(ContactData contact, GroupData group) {
+        openAddContactPage();
+        fillContactForm(contact);
+        selectGroup(group);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    }
+
     private void selectContact(ContactData contact) {
         var selectContact = manager.driver.findElement(By.cssSelector(String.format("input[value='%s']", contact.id())));
         scrollToElement(selectContact);
@@ -120,6 +135,40 @@ public class ContactHelper extends HelperBase{
         scrollToElement(pencil);
         click(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.id())));
     }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        selectAddToGroup(group);
+        submitAddToGroup();
+        returnToHomePage();
+    }
+
+    public void removeFromGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectRemoveFromGroup(group);
+        selectContact(contact);
+        submitRemoveFromGroup();
+        returnToHomePage();
+    }
+
+    private void selectRemoveFromGroup(GroupData group) {
+        Select filter = new Select(manager.driver.findElement(By.name("group")));
+        filter.selectByValue(group.id());
+    }
+
+    private void submitRemoveFromGroup() {
+        click(By.name("remove"));
+    }
+
+
+    private void selectAddToGroup(GroupData group) {
+        Select filter = new Select(manager.driver.findElement(By.name("to_group")));
+        filter.selectByValue(group.id());
+    }
+
+    private void submitAddToGroup() {
+        click(By.name("add"));
+    }
 }
 
-//<a href="edit.php?id=129"><img src="icons/pencil.png" title="Edit" alt="Edit"></a>
