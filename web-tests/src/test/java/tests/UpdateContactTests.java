@@ -13,7 +13,7 @@ public class UpdateContactTests extends TestBase {
     @Test
     void canUpdateContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "ContactCreatedByUpdateContactTest", "", "lastname", "address", "", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "ContactCreatedByUpdateContactTest", "", "lastname", "address", "", "", "", "", "", "", "", ""));
         }
         var oldContacts = app.hbm().getContactList();
         var rnd = new Random();

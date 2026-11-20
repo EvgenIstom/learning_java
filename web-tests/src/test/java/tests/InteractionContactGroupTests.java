@@ -14,7 +14,7 @@ public class InteractionContactGroupTests extends TestBase {
     @Test
     void canAddContactToGroup() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "CreatedByInteractionTest", "", "lastname", "address", "", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "CreatedByInteractionTest", "", "lastname", "address", "", "", "", "", "", "", "", ""));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "CreatedByInteractionTest", "header", "footer"));
@@ -50,7 +50,7 @@ public class InteractionContactGroupTests extends TestBase {
     @Test
     void canRemoveContactFromGroup() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "CreatedByInteractionTest", "", "lastname", "address", "", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "CreatedByInteractionTest", "", "lastname", "address", "", "", "", "", "", "", "", ""));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "CreatedByInteractionTest", "header", "footer"));
