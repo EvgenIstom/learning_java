@@ -8,9 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class CreateGroupTests extends TestBase {
 
@@ -52,13 +52,12 @@ public class CreateGroupTests extends TestBase {
         return result;
         }
 
-    public static List<GroupData> SingleRandomGroupProvider() {
-        var result = new ArrayList<GroupData>(List.of(
-                new GroupData()
-                        .withName(CommonFunctions.randomString(3))
-                        .withHeader(CommonFunctions.randomString(3))
-                        .withFooter(CommonFunctions.randomString(3))));
-        return result;
+    public static Stream<GroupData> randomGroups() {
+        Supplier<GroupData> randomGroup = () -> new GroupData()
+                .withName(CommonFunctions.randomString(3))
+                .withHeader(CommonFunctions.randomString(3))
+                .withFooter(CommonFunctions.randomString(3));
+        return Stream.generate(randomGroup).limit(1);
     }
 
 
@@ -69,26 +68,22 @@ public class CreateGroupTests extends TestBase {
     }
 
     @ParameterizedTest
-    @MethodSource("SingleRandomGroupProvider")
+    @MethodSource("randomGroups")
     public void canCreateGroup(GroupData group) throws SQLException {
         var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
         var newGroups = app.hbm().getGroupList();
-        Comparator<GroupData> compareById = (o1, o2) -> {
-            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-        };
-        newGroups.sort(compareById);
-        var maxId = newGroups.get(newGroups.size() - 1).id();
-        var expectedList = new ArrayList<>(oldGroups);
 
-        expectedList.add(group.withId(maxId));
-        expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        var extraGroups = newGroups.stream().filter(g -> ! oldGroups.contains(g)).toList();
+        var newId = extraGroups.get(0).id();
+
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(newId));
+        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
 
         var newUiGroups = app.groups().getList();
-        newUiGroups.sort(compareById);
         var uiExpectedList = expectedList.stream().map(groupData -> new GroupData(groupData.id(), groupData.name())).toList();
-        Assertions.assertEquals(newUiGroups, uiExpectedList);
+        Assertions.assertEquals(Set.copyOf(newUiGroups), Set.copyOf(uiExpectedList));
     }
 
     @ParameterizedTest

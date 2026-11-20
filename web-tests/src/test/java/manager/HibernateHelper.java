@@ -11,6 +11,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HibernateHelper extends HelperBase {
 
@@ -30,11 +31,7 @@ public class HibernateHelper extends HelperBase {
     }
 
     static List<GroupData> convertList(List<GroupRecord> records) {
-        List<GroupData> result = new ArrayList<>();
-        for (var record : records) {
-            result.add(convert(record));
-        }
-        return result;
+        return records.stream().map(HibernateHelper::convert).collect(Collectors.toList());
     }
 
     private static @NonNull GroupData convert(GroupRecord record) {
@@ -74,17 +71,19 @@ public class HibernateHelper extends HelperBase {
     }
 
     static List<ContactData> convertContactList(List<ContactRecord> records) {
-        List<ContactData> result = new ArrayList<>();
-        for (var record : records) {
-            result.add(convert(record));
-        }
-        return result;
+        return records.stream().map(HibernateHelper::convert).collect(Collectors.toList());
     }
 
     private static @NonNull ContactData convert(ContactRecord record) {
-        return new ContactData(
-                "" + record.id, record.firstname, record.lastname, record.address
-        );
+        return new ContactData().withId("" + record.id)
+                .withFirstName(record.firstname)
+                .withMiddleName(record.middlename)
+                .withLastName(record.lastname)
+                .withAddress(record.address)
+                .withHome(record.home)
+                .withMobile(record.mobile)
+                .withWork(record.work)
+                .withSecondary(record.phone2);
     }
 
     private static @NonNull ContactRecord convert(ContactData data) {

@@ -15,6 +15,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static tests.TestBase.randomFile;
 
@@ -58,27 +61,23 @@ public class Generator {
         }
     }
 
+    private Object generateData(Supplier<Object> dataSupplier) {
+        return Stream.generate(dataSupplier).limit(count).collect(Collectors.toList());
+    }
+
     private Object generateGroups() {
-        var result = new ArrayList<GroupData>();
-        for (int i = 0; i <= count; i++) {
-            result.add(new GroupData()
-                    .withName(CommonFunctions.randomString(i))
-                    .withHeader(CommonFunctions.randomString(i))
-                    .withFooter(CommonFunctions.randomString(i)));
-        }
-        return result;
+        return generateData(() -> new GroupData()
+                .withName(CommonFunctions.randomString(5))
+                .withHeader(CommonFunctions.randomString(5))
+                .withFooter(CommonFunctions.randomString(5)));
     }
 
     private Object generateContacts() {
-        var result = new ArrayList<ContactData>();
-        for (int i = 0; i <= count; i++) {
-            result.add(new ContactData()
-                    .withFirstName(CommonFunctions.randomString(i))
-                    .withLastName(CommonFunctions.randomString(i))
-                    .withAddress(CommonFunctions.randomString(i))
-                    .withPhoto(randomFile("src/test/resources/images")));
-        }
-        return result;
+        return generateData(() -> new ContactData()
+                .withFirstName(CommonFunctions.randomString(5))
+                .withLastName(CommonFunctions.randomString(5))
+                .withAddress(CommonFunctions.randomString(5))
+                .withPhoto(randomFile("src/test/resources/images")));
     }
 
     private void save(Object data) throws IOException {
