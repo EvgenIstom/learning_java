@@ -12,19 +12,19 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/web-tests" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/mantis-tests" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/web-tests" />
+            <option value="$PROJECT_DIR$/mantis-tests" />
           </set>
         </option>
         <option name="myGradleHome" value="" />
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/../web_tests" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/web-tests" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../web_tests" />
+            <option value="$PROJECT_DIR$/web-tests" />
           </set>
         </option>
         <option name="myGradleHome" value="" />

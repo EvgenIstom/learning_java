@@ -1,0 +1,47 @@
+package manager;
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
+
+import java.nio.file.Paths;
+
+public class HelperBase {
+    protected final ApplicationManager manager;
+
+    public HelperBase(ApplicationManager manager) {
+        this.manager = manager;
+    }
+
+    protected void click(By locator) {
+        try {
+            manager.driver().findElement(locator).click();
+        } catch (StaleElementReferenceException e) {
+            manager.driver().findElement(locator).click();
+        }
+    }
+
+    protected void type(By locator, String text) {
+        click(locator);
+        manager.driver().findElement(locator).clear();
+        manager.driver().findElement(locator).sendKeys(text);
+    }
+
+    protected void attach(By locator, String file) {
+        if (file == null || file.isEmpty()) {
+            return;
+        }
+        manager.driver().findElement(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
+    }
+
+    //нужен для скролла до нужного элемента, подключает умение исполнять js
+    protected void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) manager.driver()).executeScript("arguments[0].scrollIntoView({block: 'center',  inline: 'center'});", element);
+    }
+
+    protected boolean isElementPresent(By locator) {
+        return !manager.driver().findElements(locator).isEmpty();
+    }
+}
