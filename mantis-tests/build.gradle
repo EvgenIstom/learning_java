@@ -16,6 +16,7 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.49.0'
     implementation 'com.squareup.okhttp3:okhttp:5.5.1'
     implementation 'com.squareup.okhttp3:okhttp-java-net-cookiejar:5.5.0'
+    implementation 'org.apache.commons:commons-exec:1.4.0'
 }
 
 test {
