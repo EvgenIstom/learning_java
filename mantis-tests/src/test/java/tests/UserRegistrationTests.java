@@ -13,16 +13,15 @@ public class UserRegistrationTests extends TestBase {
 
     @Test
     void canRegisterUser() {
-        var username = "user_" + CommonFunctions.randomString(10);
+        var username = "user_api_" + CommonFunctions.randomString(10);
         var user = new UserData()
                 .withUsername(username)
                 .withEmail(username + "@localhost")
                 .withPassword(CommonFunctions.randomString(10));
 
-        app.jamesCli().addUser(user.email(), "password");        // создать адрес на почтовом серевере(jameshelper)
+        app.jamesApi().addUser(user.email(), "password");
 
-        app.user().registerUser(user);// заполняем форму создания в мантис и отправляем (браузер - класс помощник-создать)
-
+        app.user().registerUser(user);
         var messages = app.mail().receive(user.email(), "password", Duration.ofSeconds(10));
         Assertions.assertEquals(1, messages.size());
 
@@ -32,10 +31,10 @@ public class UserRegistrationTests extends TestBase {
 
         if (matcher.find()) {
             var url = text.substring(matcher.start(), matcher.end());
-            app.driver().get(url);//        проходим по ссылке и завершаем регистраци (браузер)
+            app.driver().get(url);
             app.user().completeRegistration(user);
         }
         app.http().login(user.username(), user.password());
-        Assertions.assertTrue(app.http().isLoggedIn()); // проверяем, что пользователь может залогиниться(httpsessionhelper)
+        Assertions.assertTrue(app.http().isLoggedIn());
     }
 }

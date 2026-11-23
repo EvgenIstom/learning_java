@@ -20,6 +20,8 @@ public class ApplicationManager {
 
     private JamesCliHelper jamesCliHelper;
 
+    private JamesApiHelper jamesApiHelper;
+
     private MailHelper mailHelper;
 
     private UserHelper userHelper;
@@ -78,6 +80,13 @@ public class ApplicationManager {
             userHelper = new UserHelper(this);
         }
         return userHelper;
+    }
+
+    public JamesApiHelper jamesApi() {
+        if (jamesApiHelper == null) {
+            jamesApiHelper = new JamesApiHelper(this);
+        }
+        return jamesApiHelper;
     }
 
 
