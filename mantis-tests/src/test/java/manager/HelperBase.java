@@ -44,4 +44,6 @@ public class HelperBase {
     protected boolean isElementPresent(By locator) {
         return !manager.driver().findElements(locator).isEmpty();
     }
+
+
 }

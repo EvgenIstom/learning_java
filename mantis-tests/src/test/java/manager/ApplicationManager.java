@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.Properties;
 
 public class ApplicationManager {
-    private WebDriver driver;
+    public WebDriver driver;
 
     private String string;
 
@@ -21,6 +21,8 @@ public class ApplicationManager {
     private JamesCliHelper jamesCliHelper;
 
     private MailHelper mailHelper;
+
+    private UserHelper userHelper;
 
     public void init(String browser, Properties properties) {
         this.string = browser;
@@ -36,7 +38,6 @@ public class ApplicationManager {
             } else {
                 throw new IllegalArgumentException(String.format("Unknown browser %s", string));
             }
-//            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit)); //вместо постусловия закрытия браузера
             driver.get(properties.getProperty("web.baseurl"));
             driver.manage().window().setSize(new Dimension(1920, 1080));
@@ -72,9 +73,16 @@ public class ApplicationManager {
         return mailHelper;
     }
 
+    public UserHelper user() {
+        if (userHelper == null) {
+            userHelper = new UserHelper(this);
+        }
+        return userHelper;
+    }
+
+
     public String property(String name) {
         return properties.getProperty(name);
     }
-
 
 }
