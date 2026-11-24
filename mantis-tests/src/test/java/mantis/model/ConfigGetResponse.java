@@ -51,7 +51,7 @@ import mantis.invoker.JSON;
 /**
  * ConfigGetResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T00:59:07.403423800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T09:12:41.187781800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
 public class ConfigGetResponse {
   public static final String SERIALIZED_NAME_CONFIGS = "configs";
   @SerializedName(SERIALIZED_NAME_CONFIGS)

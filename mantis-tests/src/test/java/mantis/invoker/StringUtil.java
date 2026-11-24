@@ -16,7 +16,7 @@ package mantis.invoker;
 import java.util.Collection;
 import java.util.Iterator;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T00:59:07.403423800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T09:12:41.187781800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
 public class StringUtil {
   /**
    * Check if the given array contains the given value (with case-insensitive comparison).

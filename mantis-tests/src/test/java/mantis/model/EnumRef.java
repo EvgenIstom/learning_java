@@ -48,7 +48,7 @@ import mantis.invoker.JSON;
 /**
  * EnumRef
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T00:59:07.403423800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T09:12:41.187781800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
 public class EnumRef {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -57,6 +57,10 @@ public class EnumRef {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
+
+  public static final String SERIALIZED_NAME_LABEL = "label";
+  @SerializedName(SERIALIZED_NAME_LABEL)
+  private String label;
 
   public EnumRef() {
   }
@@ -99,6 +103,25 @@ public class EnumRef {
   }
 
 
+  public EnumRef label(String label) {
+    this.label = label;
+    return this;
+  }
+
+  /**
+   * Get label
+   * @return label
+   */
+  @javax.annotation.Nullable
+  public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -110,12 +133,13 @@ public class EnumRef {
     }
     EnumRef enumRef = (EnumRef) o;
     return Objects.equals(this.id, enumRef.id) &&
-        Objects.equals(this.name, enumRef.name);
+        Objects.equals(this.name, enumRef.name) &&
+        Objects.equals(this.label, enumRef.label);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(id, name, label);
   }
 
   @Override
@@ -124,6 +148,7 @@ public class EnumRef {
     sb.append("class EnumRef {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -148,6 +173,7 @@ public class EnumRef {
     openapiFields = new HashSet<String>();
     openapiFields.add("id");
     openapiFields.add("name");
+    openapiFields.add("label");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -176,6 +202,9 @@ public class EnumRef {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("name") != null && !jsonObj.get("name").isJsonNull()) && !jsonObj.get("name").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
+      }
+      if ((jsonObj.get("label") != null && !jsonObj.get("label").isJsonNull()) && !jsonObj.get("label").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `label` to be a primitive type in the JSON string but got `%s`", jsonObj.get("label").toString()));
       }
   }
 

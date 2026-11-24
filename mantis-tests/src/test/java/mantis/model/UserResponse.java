@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +53,7 @@ import mantis.invoker.JSON;
 /**
  * UserResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T00:59:07.403423800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T09:12:41.187781800+03:00[Europe/Moscow]", comments = "Generator version: 7.8.0")
 public class UserResponse {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -81,6 +82,10 @@ public class UserResponse {
   public static final String SERIALIZED_NAME_PROJECTS = "projects";
   @SerializedName(SERIALIZED_NAME_PROJECTS)
   private List<ProjectRef> projects = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_CREATED_AT = "created_at";
+  @SerializedName(SERIALIZED_NAME_CREATED_AT)
+  private OffsetDateTime createdAt;
 
   public UserResponse() {
   }
@@ -226,6 +231,25 @@ public class UserResponse {
   }
 
 
+  public UserResponse createdAt(OffsetDateTime createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
+
+  /**
+   * Get createdAt
+   * @return createdAt
+   */
+  @javax.annotation.Nullable
+  public OffsetDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(OffsetDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -242,12 +266,13 @@ public class UserResponse {
         Objects.equals(this.language, userResponse.language) &&
         Objects.equals(this.timezone, userResponse.timezone) &&
         Objects.equals(this.accessLevel, userResponse.accessLevel) &&
-        Objects.equals(this.projects, userResponse.projects);
+        Objects.equals(this.projects, userResponse.projects) &&
+        Objects.equals(this.createdAt, userResponse.createdAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, email, language, timezone, accessLevel, projects);
+    return Objects.hash(id, name, email, language, timezone, accessLevel, projects, createdAt);
   }
 
   @Override
@@ -261,6 +286,7 @@ public class UserResponse {
     sb.append("    timezone: ").append(toIndentedString(timezone)).append("\n");
     sb.append("    accessLevel: ").append(toIndentedString(accessLevel)).append("\n");
     sb.append("    projects: ").append(toIndentedString(projects)).append("\n");
+    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -290,6 +316,7 @@ public class UserResponse {
     openapiFields.add("timezone");
     openapiFields.add("access_level");
     openapiFields.add("projects");
+    openapiFields.add("created_at");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

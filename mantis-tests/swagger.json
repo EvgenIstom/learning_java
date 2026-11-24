@@ -204,6 +204,12 @@
           "User"
         ],
         "operationId": "userAdd",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -579,6 +585,9 @@
         },
         "name": {
           "type": "string"
+        },
+        "label": {
+          "type": "string"
         }
       }
     },
@@ -643,6 +652,10 @@
           "items": {
             "$ref": "#/definitions/ProjectRef"
           }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
