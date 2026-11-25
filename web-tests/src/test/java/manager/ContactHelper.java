@@ -40,7 +40,7 @@ public class ContactHelper extends HelperBase{
 
 
     public void deleteContact(ContactData contact) {
-        openHomePage();
+        returnToHomePage();
         selectContact(contact);
         deleteSelectedContact();
         returnToHomePage();
@@ -95,7 +95,7 @@ public class ContactHelper extends HelperBase{
     }
 
     public void deleteAllContacts() {
-        openHomePage();
+        returnToHomePage();
         selectAllContacts();
         deleteSelectedContact();
     }
